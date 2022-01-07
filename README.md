@@ -29,47 +29,7 @@ docker run -it -e SOURCE=from.example.com:9092 -e DESTINATION=to.example.com:909
 
 #### Docker-compose usage
 
-```
-version: '2'
-
-services:
-  zookeeper:
-    image: 'bitnami/zookeeper:3'
-    ports:
-      - '2181:2181'
-    volumes:
-      - 'zookeeper_data:/bitnami'
-    environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes
-  kafka:
-    image: 'bitnami/kafka:2'
-    ports:
-      - '9092:9092'
-    volumes:
-      - 'kafka_data:/bitnami'
-    environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
-    depends_on:
-      - zookeeper
-  mirrormaker:
-    image: 'wpietri/mirror-maker:2'
-    depends_on:
-      - kafka
-    environment:
-      - SOURCE=mysourcekafka.example.com:9092
-      - DESTINATION=kafka:9092
-      - TOPICS=Topic1,Topic2
-
-
-volumes:
-  zookeeper_data:
-    driver: local
-  kafka_data:
-    driver: local
-
-```
+See [docker-compose.yml](docker-compose.yml)
 
 ### License
 
